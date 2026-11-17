@@ -1,0 +1,29 @@
+uuid: ab61251a-12eb-4d2f-b06b-dc86814561fa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.timesheet.field_project
+  module:
+    - timin_timetracking
+_core:
+  default_config_hash: cvPlW1M635iHeu3jqnkkiUWCn1AXN9AuJ8gga82ETlM
+id: timesheet.timesheet.field_project
+field_name: field_project
+entity_type: timesheet
+bundle: timesheet
+label: Project
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:project'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

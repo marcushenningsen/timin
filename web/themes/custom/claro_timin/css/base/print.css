@@ -1,0 +1,23 @@
+
+@media print {
+  .site-branding,
+  .nav-area,
+  .breadcrumb-area,
+	.page-title-area,
+  .block-local-tasks-block,
+  .region-highlighted,
+  .help,
+  .page-footer,
+	.field--name-field-internal-note,
+	.ignore_print {
+    display: none!important;
+  }
+  .main-area {
+    margin: 0!important;
+  }
+	.timesheet-print-page-title {
+		display: flex!important;
+	}
+
+
+}

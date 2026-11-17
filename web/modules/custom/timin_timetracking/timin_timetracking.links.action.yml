@@ -1,0 +1,15 @@
+entity.project.add_form:
+  route_name: entity.project.add_form
+  title: 'Add Project'
+  appears_on:
+    - timin_timetracking.projects
+entity.employee.add_form:
+  route_name: entity.employee.add_form
+  title: 'Add Personnel'
+  appears_on:
+    - timin_timetracking.employees
+entity.timesheet.add_form:
+  route_name: entity.timesheet.add_form
+  title: 'Add Daily Report'
+  appears_on:
+    - timin_timetracking.timesheets

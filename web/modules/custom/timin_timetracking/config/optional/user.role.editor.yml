@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies: {  }
+id: editor
+label: Editor
+weight: 2
+is_admin: null
+permissions:
+  - 'access content overview'
+  - 'access user profiles'
+  - 'add employee entities'
+  - 'add project entities'
+  - 'add timesheet entities'
+  - 'administer users'
+#  - 'create page content'
+  - 'delete all revisions'
+#  - 'delete any page content'
+  - 'delete employee entities'
+#  - 'delete own page content'
+#  - 'delete page revisions'
+  - 'delete project entities'
+  - 'delete timesheet entities'
+#  - 'edit any page content'
+  - 'edit employee entities'
+#  - 'edit own page content'
+  - 'edit project entities'
+  - 'edit timesheet entities'
+  - 'revert all revisions'
+#  - 'revert page revisions'
+  - 'view all revisions'
+  - 'view employee entities'
+  - 'view own unpublished content'
+#  - 'view page revisions'
+  - 'view project entities'
+  - 'view timesheet entities'
+  - 'view user email addresses'

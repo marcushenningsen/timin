@@ -1,0 +1,19 @@
+uuid: 059805ee-8075-4fca-810d-326965ef5682
+langcode: en
+status: true
+dependencies:
+  module:
+    - timin_timetracking
+id: project.field_project_employee
+field_name: field_project_employee
+entity_type: project
+type: entity_reference
+settings:
+  target_type: employee
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

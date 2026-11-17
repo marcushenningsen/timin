@@ -1,0 +1,21 @@
+uuid: 989d30e7-06ca-40f9-a2ec-2a002930fc2f
+langcode: en
+status: true
+dependencies:
+  module:
+    - timin_timetracking
+    - text
+_core:
+  default_config_hash: xR4e2o_QS6ZniFYcVfHSPMZZrJnI9k1Dg2LOdgiiXro
+id: project.field_description
+field_name: field_description
+entity_type: project
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

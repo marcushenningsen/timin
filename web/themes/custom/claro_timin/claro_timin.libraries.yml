@@ -1,0 +1,26 @@
+global-styling:
+    version: VERSION
+    css:
+        base:
+            css/base/elements.css: {}
+            css/base/print.css: {}
+        component:
+            css/components/button.css: {}
+            css/components/details.css: {}
+            css/components/field.css: {}
+            css/components/form.css: {}
+            css/components/page-title.css: {}
+            css/components/pager.css: {}
+            css/components/primary-menu.css: {}
+            css/components/site-branding.css: {}
+            css/components/system-admin--admin-list.css: {}
+            css/components/tabs.css: {}
+            css/components/tables.css: {}
+            css/components/paragraphs.css: {}
+        layout:
+            css/layout/layout.css: {}
+        theme:
+            css/theme/timesheet.css: {}
+            css/theme/views-exposed-form.css: {}
+            https://fonts.googleapis.com/css?family=Ubuntu: { type: external }
+            https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200: { type: external }

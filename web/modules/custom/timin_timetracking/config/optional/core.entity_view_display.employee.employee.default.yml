@@ -1,0 +1,24 @@
+uuid: 98e0ac13-36e5-4896-ac4a-6fdff58a8a05
+langcode: en
+status: true
+dependencies:
+  module:
+    - timin_timetracking
+_core:
+  default_config_hash: vIwou73Pdr_0r3GvBvg2v2blRdifh9lPCD-giyyt1uo
+id: employee.employee.default
+targetEntityType: employee
+bundle: employee
+mode: default
+content:
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  status: true
+  user_id: true

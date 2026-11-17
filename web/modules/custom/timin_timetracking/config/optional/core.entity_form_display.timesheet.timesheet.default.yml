@@ -1,0 +1,55 @@
+uuid: 6ba8acb9-5db0-4a71-a9f5-a008460c7e7b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.timesheet.timesheet.field_date
+    - field.field.timesheet.timesheet.field_events
+    - field.field.timesheet.timesheet.field_line_count
+    - field.field.timesheet.timesheet.field_project
+    - field.field.timesheet.timesheet.field_time_sum
+    - field.field.timesheet.timesheet.field_works
+  module:
+    - timin_timetracking
+    - datetime
+_core:
+  default_config_hash: 296z82lw99yiSJ9sEu8QXkoTw8eNT4w9jqmTVU_Bt60
+id: timesheet.timesheet.default
+targetEntityType: timesheet
+bundle: timesheet
+mode: default
+content:
+  field_date:
+    weight: -5
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_events:
+    weight: 2
+    settings:
+      rows: 2
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_project:
+    weight: -4
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_works:
+    weight: 1
+    settings:
+      rows: 2
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+hidden:
+  field_line_count: true
+  field_time_sum: true
+  name: true
+  status: true
+  user_id: true

@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - timin_timetracking_rest
+    - hal
+    - user
+id: timesheet_data_resource
+plugin_id: timesheet_data_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - hal_json
+  authentication:
+    - basic_auth

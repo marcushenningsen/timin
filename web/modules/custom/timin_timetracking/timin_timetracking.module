@@ -1,0 +1,341 @@
+<?php
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use \Drupal\Core\Form\FormStateInterface;
+use \Drupal\taxonomy\Entity\Term;
+use \Drupal\Core\Url;
+
+
+/** 
+ * Provides a theme definition for custom content entity
+ * {@inheritdoc}
+ */
+function timin_timetracking_theme($existing, $type, $theme, $path) {
+  $theme = [
+     'timesheet' => [                          // the entity id
+      'path' => $path . '/templates',          // template directory in module or theme
+      'template'  => 'timesheet',              // defines base template as /artwork.html.twig
+      'render element' => 'elements',          // Theme API call to define the container of the entity in the render array
+                                               // The entity will be prefixed with a hash sign as ['elements']['#artwork']
+    ],
+  ];
+  return $theme;
+}
+
+// to set up the 'content' variable
+function template_preprocess_timesheet(array &$variables) {
+  foreach (\Drupal\Core\Render\Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for timesheet templates.
+ */
+function timin_timetracking_preprocess_timesheet(array &$variables) {
+  $entity = $variables['elements']['#timesheet'];
+  $variables['timesheet_id'] = $entity->id();
+  $variables['timesheet_url'] = $entity->toUrl()->toString();
+
+  $variables['timesheet_print_url'] = Url::fromRoute('printable.show_format.timesheet', [
+    'entity' => $entity->id(),
+    'printable_format' => 'print',
+  ])->toString();
+
+}
+
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function timin_timetracking_employee_view(array &$build, EntityInterface $entity) {
+
+	//get assigned projects
+	$project_ids = \Drupal::entityQuery('project')
+		->condition('field_project_employee', $entity->id())
+		->accessCheck(TRUE)
+		->execute();
+	$projects_assigned = \Drupal::entityTypeManager()->getStorage('project')->loadMultiple($project_ids);
+
+	$build['employee'] = [
+		'#type' => 'container',
+		'#attributes' => [
+			'class' => [
+				'view-wrapper--employee',
+			],
+		],
+		'#weight' => 5,
+	];
+
+	$build['employee_project_assignments'] = [
+		'#type' => 'container',
+		'#attributes' => array(
+			'class' => array('field--label-above'),
+		),
+	];
+
+	$build['employee_project_assignments']['field_label'] = [
+		'#markup' => '<div class="field__label">Projektzuordnung</div>',
+	];
+
+	$build['employee_project_assignments']['field_items'] = [
+		'#type' => 'container',
+		'#attributes' => array(
+			'class' => array('field__items'),
+		),
+	];
+
+	foreach ($projects_assigned as $id => $prj) {
+		$build['employee_project_assignments']['field_items'][$id] = [
+			'#type' => 'container',
+			'#attributes' => array(
+				'class' => array('field__item'),
+			),
+		];
+		$link = $prj->toLink()->toRenderable();
+		$build['employee_project_assignments']['field_items'][$id]['link'] = $link;
+	}
+	
+}
+
+
+
+	
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function timin_timetracking_timesheet_view(array &$build, EntityInterface $entity) {
+
+  $connection = \Drupal::service('database');
+
+	$query =  $connection->select('timesheet_data', 'td')
+		->condition('timesheet_id', $entity->id())
+  	->fields('td', ['employee_id', 'service_type_id', 'time']);
+  $results = $query->execute()->fetchAll();
+
+	$timesheet_works_query = $connection->select('timesheet_works', 'tw');
+	$timesheet_works_query->leftJoin('paragraph__field_name', 'fn', 'tw.service_type_id = fn.entity_id');
+	$timesheet_works_query
+		->condition('tw.timesheet_id', $entity->id())
+		->fields('tw')
+		->fields('fn',['field_name_value']);
+	$timesheet_works_results = $timesheet_works_query->execute()->fetchAll();
+
+	$timesheet_data_query = $connection->select('timesheet_data', 'td');
+	$timesheet_data_query->join('employee', 'e', 'td.employee_id = e.id');
+	$timesheet_data_query
+		->condition('td.timesheet_id', $entity->id())
+		->fields('td')
+		->fields('e',['name'])
+		->orderBy('name');
+	$timesheet_data_results = $timesheet_data_query->execute()->fetchAll();
+
+
+
+	$build['print_page_title'] = [
+		'#type' => 'container',
+		'#attributes' => [
+			'class' => [
+				'timesheet-print-page-title',
+			],
+		],
+		'#weight' => -5,
+	];
+	$build['print_page_title']['label'] = [
+		'#prefix' => '<div class="label_left">',
+		'#markup' => t('Site Report - Timin, Timber Construction'),
+		'#suffix' => '</div>',				
+	];
+	$build['print_page_title']['title'] = [
+		'#prefix' => '<div class="label_left">',
+		'#markup' => $entity->label(),
+		'#suffix' => '</div>',	
+	];
+	
+	$build['works'] = [
+		'#type' => 'container',
+		'#attributes' => [
+			'class' => [
+				'view-wrapper--works',
+			],
+		],
+		'#weight' => 5,
+	];
+
+	$i = 0;
+	foreach ($timesheet_works_results as $record) {
+
+		$service_type_id = $record->service_type_id;
+
+		$build['works'][$i] = [
+			'#type' => 'container',
+			'#attributes' => [
+				'class' => [
+					'view-wrapper--works-item',
+					'service-type-id-' . $service_type_id,
+				],
+			],
+		];
+
+		if ( $i != 0 ) {
+			$build['works'][$i]['service_type'] = [
+				'#type' => 'container',
+				'#attributes' => [
+					'class' => [
+						'field--label-above',
+					],
+				],
+			];
+
+			$build['works'][$i]['service_type']['label'] = [
+				'#prefix' => '<div class="field__label">',
+				'#markup' => t('Service Type'),
+				'#suffix' => '</div>',				
+			];
+
+			$build['works'][$i]['service_type']['text'] = [
+				'#prefix' => '<div class="field__item">',
+				'#markup' => $record->field_name_value,
+				'#suffix' => '</div>',				
+			];
+		}
+
+		if ( !empty($record->works_description) ) {
+
+			$build['works'][$i]['works_description'] = [
+				'#type' => 'container',
+				'#attributes' => [
+					'class' => [
+						'field--label-above',
+					],
+				],
+			];
+
+			$build['works'][$i]['works_description']['label'] = [
+				'#prefix' => '<div class="field__label">',
+				'#markup' => t('Description'),
+				'#suffix' => '</div>',				
+			];
+
+			$build['works'][$i]['works_description']['text'] = [
+				'#type' => 'container',
+				'#attributes' => [
+					'class' => [
+						'field__item',
+					],
+				],
+			];
+
+			$build['works'][$i]['works_description']['text']['processed'] = [
+				'#type' => 'processed_text',
+				'#text' => $record->works_description,
+				'#format' => 'plain_text',
+				/*'#attributes' => [
+					'class' => [
+						'field__item',
+					],
+				],*/
+			];
+			
+		}
+
+		$header_table = array(
+			array('data' => t('Employee'), 'class' => 'employee'),
+			array('data' => t('Time'), 'class' => 'time'),
+		);
+
+		// create rows
+		$rows = [];
+		foreach ($timesheet_data_results as $data) {
+			if ( $record->service_type_id == $data->service_type_id ) {
+				$rows[] = array(
+					//'employee' => $data->employee_id,
+					//'employee' => $employee_entity->label(),
+					//'time' => $data->time,
+					//array('data' => $employee_entity->label(), 'class' => 'employee'),
+					array('data' => $data->name, 'class' => 'employee'),
+					array('data' => number_format($data->time, 2, ',', '.'), 'class' => 'time'),
+				);
+			}
+		}
+
+		// total row
+		$sum_query =  $connection->select('timesheet_data', 'td')
+			->condition('timesheet_id', $entity->id())
+			->condition('service_type_id', $record->service_type_id);
+		$sum_query->addExpression('SUM(time)', 'sum_time');
+
+		$sum_time = $sum_query->execute()->fetchField();
+
+		if ( $sum_time > 0 ) {
+			$total_row = array(
+				array('data' => t('Total'), 'class' => 'total'),
+				array('data' => number_format($sum_time, 2, ',', '.'), 'class' => 'time'),
+			);
+			$rows[] = array('data' => $total_row, 'class' => 'total');
+		}
+
+
+		$build['works'][$i]['timetracking'] = [
+			'#type' => 'container',
+			'#attributes' => [
+				'class' => [
+					'field--label-above',
+				],
+			],
+		];
+
+		if ( $record->ignore_print == 1 ) {
+			if ( $i == 0 ) {
+				$build['works'][$i]['timetracking']['#attributes']['class'][] = 'ignore_print';
+			} else {
+				$build['works'][$i]['#attributes']['class'][] = 'ignore_print';
+			}
+		}
+
+		$build['works'][$i]['timetracking']['label'] = [
+			'#prefix' => '<div class="field__label">',
+			'#markup' => t('Working Time'),
+			'#suffix' => '</div>',				
+		];
+
+		$build['works'][$i]['timetracking']['item'] = [
+			'#type' => 'container',
+			'#attributes' => [
+				'class' => [
+					'field__item',
+				],
+			],
+		];
+
+		$build['works'][$i]['timetracking']['item']['timesheet_data_table'] = [
+			'#type' => 'table',
+			//'#theme' => 'datatable',
+			//'#header' => $header_table,
+			'#rows' => $rows,
+			'#empty' => t('No times tracked'),
+			'#attributes' => array(
+				'class' => array('timesheet-data-table'),
+				'id' => 'timesheet-data-table',
+			),
+		];
+
+		$i++;
+
+	}
+
+	$build['timesheet-images'] = [
+		'#type' => 'container',
+		'#attributes' => [
+			'class' => [
+				'view-wrapper--images',
+			],
+		],
+		'#weight' => 8,
+	];
+
+	$build['timesheet-images']['field_image'] = $build['field_image'];
+	unset($build['field_image']);
+
+}

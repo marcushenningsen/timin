@@ -1,0 +1,27 @@
+uuid: 0cbf6702-bf36-465e-b07b-400ee8e3f68d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_project_employee
+  module:
+    - timin_timetracking
+id: project.project.field_project_employee
+field_name: field_project_employee
+entity_type: project
+bundle: project
+label: 'Employee Assignment'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:employee'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

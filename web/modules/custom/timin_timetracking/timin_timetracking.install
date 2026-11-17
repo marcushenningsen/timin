@@ -1,0 +1,308 @@
+<?php
+
+use Drupal\Core\Database\Database;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+
+
+function timin_timetracking_schema() {
+  $schema['timesheet_works'] = array(
+    'fields' => [
+      'timesheet_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'service_type_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'works_description' => [
+        'type' => 'text',
+        'null' => TRUE,
+      ],
+    ],
+    'primary key' => [
+      'timesheet_id',
+      'service_type_id',
+    ],
+  );
+
+  $schema['timesheet_data'] = array(
+    'fields' => [
+      'timesheet_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'service_type_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'employee_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'date' => [
+        'type' => 'varchar',
+        'mysql_type' => 'date',
+        'not null' => TRUE,
+      ],
+      'project_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'time' => [
+        'type' => 'numeric',
+        'precision' => 10, 
+        'scale' => 1, 
+      ],
+    ],
+    'primary key' => [
+      'timesheet_id',
+      'service_type_id',
+      'employee_id',
+    ],
+    'indexes' => [
+      'date' => [
+        'date',
+      ],
+      'project_id' => [
+        'project_id',
+      ],
+      'employee_id' => [
+        'employee_id',
+      ],
+    ],
+  );
+ 
+  return $schema;
+}
+
+
+function timin_timetracking_update_10001() {
+	$spec = [
+    'fields' => [
+      'id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'delta' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'service_type_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'works_description' => [
+        'type' => 'text',
+        'null' => TRUE,
+      ],
+    ],
+    'primary key' => [
+      'id',
+      'delta',
+    ],
+    'indexes' => [
+      'service_type_id' => [
+        'service_type_id',
+      ],
+    ],
+  ]; 
+	$schema = Database::getConnection()->schema();
+	$schema->createTable('timesheet_works', $spec);
+}
+
+function timin_timetracking_update_10002() {
+  $spec1 = [
+		'type' => 'int',
+		'unsigned' => TRUE,
+		'not null' => TRUE,
+  ]; 
+  $pk1 = [
+    'timesheet_id',
+    'service_type_id',
+  ];
+	$schema = Database::getConnection()->schema();
+	$schema->dropIndex('timesheet_works', 'service_type_id');
+	$schema->dropPrimaryKey('timesheet_works');
+	$schema->dropField('timesheet_works', 'delta');
+	$schema->changeField('timesheet_works', 'id', 'timesheet_id', $spec1);
+	$schema->addPrimaryKey('timesheet_works', $pk1);
+}
+ 
+function timin_timetracking_update_10003() {
+  $pk1 = [
+    'timesheet_id',
+    'service_type_id',
+  ];
+
+  $spec2 = [
+		'type' => 'int',
+		'unsigned' => TRUE,
+		'not null' => TRUE,
+  ];
+
+  $pk2 = [
+    'timesheet_id',
+    'service_type_id',
+    'employee_id'
+  ];
+ 
+ 
+	$schema = Database::getConnection()->schema();
+	$schema->addPrimaryKey('timesheet_works', $pk1);
+	$schema->dropPrimaryKey('timesheet_data');
+	$schema->dropField('timesheet_data', 'delta');
+	$schema->changeField('timesheet_data', 'id', 'timesheet_id', $spec2);
+	$schema->addPrimaryKey('timesheet_data', $pk2);
+}
+
+
+function timin_timetracking_update_10004() {
+	$table = 'timesheet_data';
+	$field = 'time';
+	$field_new = 'time';
+  $spec = [
+		'type' => 'numeric',
+    'precision' => 10, 
+    'scale' => 2, 
+  ]; 
+	$keys_new = '';
+	$schema = Database::getConnection()->schema();
+	$schema->changeField($table, $field, $field_new, $spec);
+}
+
+
+function timin_timetracking_update_10005() {
+	$table = 'timesheet_works';
+	$field = 'ignore_print';
+  $spec = [
+		'type' => 'int',
+		'size' => 'tiny',
+		'not null' => TRUE,
+		'default' => 0,
+	]; 
+	$keys_new = '';
+	$schema = Database::getConnection()->schema();
+	$schema->addField($table, $field, $spec);
+}
+
+function timin_timetracking_update_10006() {
+
+	$connection = \Drupal::service('database');
+
+	$timesheet_data_query =  $connection->select('timesheet_data', 'td');
+	$timesheet_data_query
+		->fields('td',['timesheet_id'])
+		->groupBy('timesheet_id')
+		->addExpression('COUNT(DISTINCT employee_id)', 'personnel_count');
+	$timesheet_data_results = array();
+	$timesheet_data_results = $timesheet_data_query->execute()->fetchAll();
+
+	foreach ($timesheet_data_results as $data) {
+		$timesheet_entity = \Drupal::entityTypeManager()->getStorage('timesheet')->load($data->timesheet_id);
+	  $timesheet_entity->set('field_personnel_count', $data->personnel_count);
+		$timesheet_entity->save();
+	}
+
+}
+
+
+
+function timin_timetracking_update_10007() {
+
+	/**
+	 * Update the length of a text field which already contains data.
+	 *
+	 * @param string $entity_type_id
+	 * @param string $field_name
+	 * @param integer $new_length
+	 */
+	function _module_change_text_field_max_length ($entity_type_id, $field_name, $new_length) {
+		$name = 'field.storage.' . $entity_type_id . "." . $field_name;
+
+		// Get the current settings
+		$result = \Drupal::database()->query(
+			'SELECT data FROM {config} WHERE name = :name',
+			[':name' => $name]
+		)->fetchField();
+		$data = unserialize($result);
+		$data['settings']['max_length'] = $new_length;
+
+		// Write settings back to the database.
+		\Drupal::database()->update('config')
+			->fields(['data' => serialize($data)])
+			->condition('name', $name)
+			->execute();
+
+		// Update the value column in both the _data and _revision tables for the field
+		$table = $entity_type_id . "__" . $field_name;
+		//$table_revision = $entity_type_id . "_revision__" . $field_name;
+		$new_field = ['type' => 'varchar', 'length' => $new_length];
+		$col_name = $field_name . '_value';
+		\Drupal::database()->schema()->changeField($table, $col_name, $col_name, $new_field);
+		//\Drupal::database()->schema()->changeField($table_revision, $col_name, $col_name, $new_field);
+
+		// Flush the caches.
+		drupal_flush_all_caches();
+	}
+
+
+   _module_change_text_field_max_length('project', 'field_abbreviation', 4);
+
+}
+
+function timin_timetracking_update_10009() {
+  $entity_type_id = 'project';
+  $field_name = 'field_abbreviation';
+
+  $definition = \Drupal::service('entity_field.manager')
+    ->getFieldStorageDefinitions($entity_type_id)[$field_name];
+
+  /** @var \Drupal\Core\Entity\Sql\SqlContentEntityStorage $storage */
+  $storage = \Drupal::entityTypeManager()->getStorage($entity_type_id);
+  $mapping = $storage->getTableMapping();
+  $column = $mapping->getFieldColumnName($definition, 'value');
+
+  $tables = [$mapping->getDedicatedDataTableName($definition)];
+  $entity_type = \Drupal::entityDefinitionUpdateManager()->getEntityType($entity_type_id);
+  if ($entity_type->isRevisionable()) {
+    $tables[] = $mapping->getDedicatedRevisionTableName($definition);
+  }
+
+  // Resize the column.
+  $schema = \Drupal::database()->schema();
+  foreach ($tables as $table) {
+    if ($schema->tableExists($table) && $schema->fieldExists($table, $column)) {
+      $schema->changeField($table, $column, $column, [
+        'type' => 'varchar',
+        'length' => 4,
+        'binary' => FALSE,
+        'not null' => TRUE,
+      ]);
+    }
+  }
+
+  // Store exactly the schema Drupal expects.
+  $m = new \ReflectionMethod($storage, 'getStorageSchema');
+  $m->setAccessible(TRUE);
+  $handler = $m->invoke($storage);
+  $g = new \ReflectionMethod($handler, 'getSchemaFromStorageDefinition');
+  $g->setAccessible(TRUE);
+  \Drupal::keyValue('entity.storage_schema.sql')
+    ->set("$entity_type_id.field_schema_data.$field_name", $g->invoke($handler, $definition));
+
+  \Drupal::service('entity.last_installed_schema.repository')
+    ->setLastInstalledFieldStorageDefinition($definition);
+
+  return t('Resized @c in @t to varchar(4).', ['@c' => $column, '@t' => implode(', ', $tables)]);
+}

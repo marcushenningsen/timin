@@ -1,0 +1,170 @@
+
+
+.timesheet-print-page-title {
+	width: 100%;
+	border-bottom: 1px solid #555;
+	font-weight: bold;
+	display: none;
+	padding: 1.5rem 0;
+}
+
+.timesheet-print-page-title .label_left {
+	flex: 1;
+}
+
+.timesheet-print-page-title .label_right {
+	flex: 1;
+	text-align: right;
+}
+
+
+
+table.timesheet-data-table  {
+	margin-top: var(--space-l);
+	margin-bottom: var(--space-l);
+}
+
+.timesheet-data-table tbody  {
+	vertical-align: baseline;
+	margin: 0;
+}
+
+.timesheet-data-table tr {
+	border: 0;
+}
+
+
+.timesheet-data-table th, .timesheet-data-table td {
+	border: 0;
+  height: 1rem;
+	padding: 0 0 0.25rem 0;
+}
+
+.timesheet-data-table th.time, .timesheet-data-table td.time {
+		text-align: right;
+		width: 5rem;
+}
+
+.timesheet-data-table tr.total {
+		border-top: 1px solid #232429;
+		font-weight: bold;
+}
+
+
+.timesheets-table {
+}
+
+form .timesheet-data-table tbody  {
+	vertical-align: middle;
+}
+
+form .timesheet-data-table th, form .timesheet-data-table td {
+  border: 1px solid #8e929c;
+  height: 1rem;
+  padding: 0.25rem 1rem;
+	font-size: var(--font-size-s);
+}
+
+form .timesheet-data-table td .time {
+		text-align: right;
+}
+
+
+form .timesheet-data-table td .sum {
+		text-align: right;
+		font-weight:bold;
+		background:#E8E8E8;
+}
+
+
+form .timesheet-data-table td .sum_row {
+		padding-right: 28px;
+}
+
+
+
+
+
+form .timesheet-data-table th.time,
+form .timesheet-data-table th.works_sum,
+form .timesheet-data-table th.sum {
+	width: 6rem;
+	text-align: center;
+}
+
+form .timesheet-data-table tr {
+	border: 0;
+}
+
+
+
+
+
+
+form .timesheet-data-table tr.odd .form-element {
+	background:#f8f8f8;
+}
+
+form .timesheet-data-table tr.even .form-element {
+	background:#f2f2f3;
+}
+
+
+form .timesheet-data-table tr:focus-within {
+	border: 2px solid #222330;
+}
+
+form .timesheet-data-table tr:focus-within .form-element {
+	background: #7EF400;
+	box-shadow: none;
+}
+
+form .timesheet-data-table tr .form-item {
+	margin: 0;
+}
+
+form .timesheet-data-table td {
+	padding: 0;
+}
+
+form .timesheet-data-table td.empty {
+	padding: 0.25rem 1rem;
+}
+
+form .timesheet-data-table td .form-element {
+	min-height: 2.5rem;
+}
+
+form .timesheet-data-table td .form-element--type-select {
+	border: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+form .timesheet-data-table .form-number,
+form .timesheet-data-table td.time {
+		text-align: right;
+}
+
+
+form .timesheet-data-table td input {
+  border: 0;
+  height: 2rem;
+  padding: 0.25rem 1rem;
+}
+
+/* DataTables 2 right-aligns date/number columns and puts the sort
+   arrows on the left; restore the left-aligned layout. */
+table.dataTable th.dt-type-date,
+table.dataTable td.dt-type-date,
+table.dataTable th.dt-type-numeric,
+table.dataTable td.dt-type-numeric {
+  text-align: left;
+}
+
+table.dataTable th.dt-type-date div.dt-column-header,
+table.dataTable th.dt-type-date div.dt-column-footer,
+table.dataTable th.dt-type-numeric div.dt-column-header,
+table.dataTable th.dt-type-numeric div.dt-column-footer {
+  flex-direction: row;
+}

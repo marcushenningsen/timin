@@ -1,0 +1,24 @@
+uuid: 639fdeef-7eaf-4a0e-b41b-d47ea7f61283
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.timesheet.field_time_sum
+  module:
+    - timin_timetracking
+id: timesheet.timesheet.field_time_sum
+field_name: field_time_sum
+entity_type: timesheet
+bundle: timesheet
+label: 'Time Sum'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

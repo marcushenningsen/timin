@@ -1,0 +1,22 @@
+uuid: dee2bca3-caa8-4f75-ad95-ad18d5439f06
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.project.field_abbreviation
+  module:
+    - timin_timetracking
+_core:
+  default_config_hash: 9kQzgc_nC6WkXB1SuaKXbdK_uDmbIqcAdJYYLZ-FPS8
+id: project.project.field_abbreviation
+field_name: field_abbreviation
+entity_type: project
+bundle: project
+label: Abbreviation
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

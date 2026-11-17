@@ -1,0 +1,62 @@
+
+
+.field--label-above {
+	margin-top: 0.5rem;
+}
+
+.field--label-above .field__label {
+	display: table-cell;
+	width: 12rem;
+	vertical-align: top;
+}
+
+.field--label-above .field__items {
+	display: table-cell;
+}
+
+
+
+.field--label-above .field__item {
+	display: table-cell;
+	padding-right: 10px;
+	vertical-align: top;
+}
+
+
+.field--label-above .field__items .field__item {
+	display: block;
+}
+
+
+
+.field--type-image .field__items {
+	display: table-cell;
+}
+
+.field--type-image .field__item {
+	display: inline-table;
+	padding: 1rem 1rem 0 0;
+	vertical-align: top;
+}
+
+.field--type-image .field__item  p {
+	max-width: 340px;
+}
+
+
+
+.form-text  {
+	width: 100%;
+}
+
+
+
+.form-element:active {
+    border-color: #222330;
+}
+
+.form-element:focus,
+.form-element:hover:focus {
+  border-color: #222330;
+  box-shadow: inset 0 0 0 1px #222330;
+}

@@ -1,0 +1,22 @@
+uuid: 7ed64986-0c69-44fe-948f-06b7cdb7f363
+langcode: en
+status: true
+dependencies:
+  module:
+    - timin_timetracking
+    - datetime
+_core:
+  default_config_hash: 0NGNkqcLBZc_B-ORZoPgrrnb5Y3lBANFku-e4WBotfs
+id: timesheet.field_date
+field_name: field_date
+entity_type: timesheet
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,13 @@
+name: Timin Time Tracking
+type: module
+description: 'Timin Time Tracking'
+core_version_requirement: ^10.3 || ^11
+package: 'Timin Time Tracking'
+dependencies:
+  - drupal:views
+  - drupal:field_ui
+  - drupal:datetime
+  - drupal:image
+  - flag:flag
+  - paragraphs:paragraphs
+  - printable:printable

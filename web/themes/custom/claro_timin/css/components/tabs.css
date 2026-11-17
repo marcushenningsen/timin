@@ -1,0 +1,55 @@
+/**
+ * Tabs.
+ */
+
+.tabs__link {
+  color: #545560;
+}
+
+.tabs__link:focus {
+  color: #353641;
+  box-shadow: none;
+}
+
+.tabs__link:hover {
+  color: #545560;
+  background: #f3f4f9;
+}
+
+.tabs__link.is-active {
+  color: #282828;
+}
+
+.tabs__link.is-active:hover {
+  color: #353641;
+}
+
+.tabs__link.is-active::before {
+  border-bottom: 3px solid #353641;
+}
+
+.tabs__tab.is-active::before {
+  border-left: 3px solid #353641; /* LTR */
+}
+
+.tabs--secondary::after {
+  border-bottom: 1px solid #353641;
+}
+
+@media screen and (min-width: 48em) {
+  .is-horizontal .tabs__tab {
+  }
+
+  .is-horizontal .tabs__link.is-active::before {
+    border-bottom: 3px solid #353641;
+  }
+
+  .is-horizontal .tabs__link:hover {
+    color: #282828;
+    background: #F0F0F0;
+  }
+
+  .is-horizontal .tabs--primary .tabs__link:focus {
+    box-shadow: none;
+  }
+}

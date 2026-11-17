@@ -1,0 +1,57 @@
+
+# employee permissions
+add employee entities:
+  title: 'Create new Employee entities'
+
+administer employee entities:
+  title: 'Administer Employee entities'
+  description: 'Allow to access the administration form to configure Employee entities.'
+  restrict access: true
+
+delete employee entities:
+  title: 'Delete Employee entities'
+
+edit employee entities:
+  title: 'Edit Employee entities'
+
+view employee entities:
+  title: 'View Employee entities'
+
+# project permissions
+add project entities:
+  title: 'Create new Project entities'
+
+administer project entities:
+  title: 'Administer Project entities'
+  description: 'Allow to access the administration form to configure Project entities.'
+  restrict access: true
+
+delete project entities:
+  title: 'Delete Project entities'
+
+edit project entities:
+  title: 'Edit Project entities'
+
+view project entities:
+  title: 'View Project entities'
+
+# timesheet permissions
+add timesheet entities:
+  title: 'Create new Timesheet entities'
+
+administer timesheet entities:
+  title: 'Administer Timesheet entities'
+  description: 'Allow to access the administration form to configure Timesheet entities.'
+  restrict access: true
+
+delete timesheet entities:
+  title: 'Delete Timesheet entities'
+
+edit timesheet entities:
+  title: 'Edit Timesheet entities'
+
+clone timesheet entities:
+  title: 'Clone Timesheet entities'
+
+view timesheet entities:
+  title: 'View Timesheet entities'

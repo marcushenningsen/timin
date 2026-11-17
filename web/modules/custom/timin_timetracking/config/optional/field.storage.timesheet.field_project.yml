@@ -1,0 +1,21 @@
+uuid: d51ef95e-5495-49eb-926b-02fcff6d64e5
+langcode: en
+status: true
+dependencies:
+  module:
+    - timin_timetracking
+_core:
+  default_config_hash: Y-Vml9dVyGnnQR2omngI8MfJ3mmULCO7obT7-3FdU-s
+id: timesheet.field_project
+field_name: field_project
+entity_type: timesheet
+type: entity_reference
+settings:
+  target_type: project
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

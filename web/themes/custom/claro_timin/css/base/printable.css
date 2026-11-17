@@ -1,0 +1,130 @@
+
+.site-branding,
+.nav-area,
+.breadcrumb-area,
+.page-title-area,
+.block-local-tasks-block,
+.region-highlighted,
+.help,
+.page-footer,
+.field--name-field-internal-note,
+.ignore_print {
+	display: none!important;
+}
+
+.main-area {
+	margin: 0!important;
+}
+
+
+body {
+	font-size: 12px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.timesheet-print-page-break {
+  page-break-after: always;
+	break-after: page;
+}
+
+
+.timesheet-print-page-title {
+	display: flex!important;
+	justify-content: space-between;
+	font-weight: bold;
+	padding: 20px 0;
+	border-bottom: 1px solid;
+	font-size: 15px;
+}
+
+
+
+.field--label-above {
+    margin-top: 1rem;
+}
+
+.field__label {
+    font-weight: bold;
+}
+
+
+.field--label-above .field__label {
+    display: table-cell;
+    width: 12rem;
+    vertical-align: top;
+}
+
+.field--label-above .field__item {
+    display: table-cell;
+    padding-right: 10px;
+    vertical-align: top;
+}
+
+.field--type-image .field__items {
+    display: table-cell;
+}
+
+/*
+.field--label-above .field__label {
+    display: table-cell;
+    width: 12rem;
+    vertical-align: top;
+}
+
+.field--label-above .field__item {
+    display: table-cell;
+    padding-right: 10px;
+    vertical-align: top;
+}
+*/
+
+
+.form-wrapper--works, .view-wrapper--works {
+    margin-top: 1rem;
+}
+
+.form-wrapper--works-item, .view-wrapper--works-item, .form-wrapper--images, .view-wrapper--images {
+    border-top: 1px solid;
+    padding: 0.5rem 0;
+    page-break-inside: avoid;
+}
+
+
+table.timesheet-data-table {
+	border-collapse: collapse;
+	font-size: 12px;
+}
+
+.timesheet-data-table tbody {
+    vertical-align: baseline;
+    margin: 0;
+}
+
+.timesheet-data-table tr {
+    border: 0;
+}
+
+.timesheet-data-table tr.odd,
+.timesheet-data-table tr.even {
+    background-color: transparent;
+}
+
+.timesheet-data-table th, .timesheet-data-table td {
+    border: 0;
+    height: 1rem;
+    padding: 0.25rem 0;
+}
+
+.timesheet-data-table th.time, .timesheet-data-table td.time {
+    text-align: right;
+    width: 5rem;
+}
+
+.timesheet-data-table tr.total {
+    border-top: 1px solid;
+    font-weight: bold;
+}
+

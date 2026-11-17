@@ -1,0 +1,37 @@
+
+project.admin.structure.settings:
+  title: 'Project settings'
+  description: 'Configure Project entities'
+  route_name: project.settings
+  parent: system.admin_structure
+
+employee.admin.structure.settings:
+  title: 'Employee settings'
+  description: 'Configure Employee entities'
+  route_name: employee.settings
+  parent: system.admin_structure
+
+timesheet.admin.structure.settings:
+  title: 'Daily Report settings'
+  description: 'Configure Daily Report entities'
+  route_name: timesheet.settings
+  parent: system.admin_structure
+
+admin:
+  title: 'Admin'
+  description: 'Administration'
+  url: internal:/admin
+  menu_name: account
+  weight: 999
+
+timin_timetracking.projects:
+  title: 'Projects'
+  route_name: timin_timetracking.projects
+  menu_name: main
+  weight: -49
+
+timin_timetracking.employees:
+  title: 'Personnel'
+  route_name: timin_timetracking.employees
+  menu_name: main
+  weight: -48

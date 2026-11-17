@@ -1,0 +1,25 @@
+uuid: be3dd809-42dd-480d-b67f-94c95e46445a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.timesheet.field_date
+  module:
+    - timin_timetracking
+    - datetime
+_core:
+  default_config_hash: JalWI-5OSssiAn7zjdvqDHVbTGYQ7WQen75T7-LWskA
+id: timesheet.timesheet.field_date
+field_name: field_date
+entity_type: timesheet
+bundle: timesheet
+label: Date
+description: ''
+required: true
+translatable: false
+default_value:
+  default_date_type: now
+  default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

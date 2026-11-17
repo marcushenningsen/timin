@@ -1,0 +1,69 @@
+
+# Employee routing definition
+employee.settings_tab:
+  route_name: employee.settings
+  title: 'Settings'
+  base_route: employee.settings
+
+entity.employee.canonical:
+  route_name: entity.employee.canonical
+  base_route: entity.employee.canonical
+  title: 'View'
+
+entity.employee.edit_form:
+  route_name: entity.employee.edit_form
+  base_route: entity.employee.canonical
+  title: 'Edit'
+
+entity.employee.delete_form:
+  route_name:  entity.employee.delete_form
+  base_route:  entity.employee.canonical
+  title: Delete
+  weight: 10
+# Project routing definition
+project.settings_tab:
+  route_name: project.settings
+  title: 'Settings'
+  base_route: project.settings
+
+entity.project.canonical:
+  route_name: entity.project.canonical
+  base_route: entity.project.canonical
+  title: 'View'
+
+entity.project.edit_form:
+  route_name: entity.project.edit_form
+  base_route: entity.project.canonical
+  title: 'Edit'
+
+entity.project.delete_form:
+  route_name:  entity.project.delete_form
+  base_route:  entity.project.canonical
+  title: Delete
+  weight: 10
+# Timesheet routing definition
+timesheet.settings_tab:
+  route_name: timesheet.settings
+  title: 'Settings'
+  base_route: timesheet.settings
+
+entity.timesheet.canonical:
+  route_name: entity.timesheet.canonical
+  base_route: entity.timesheet.canonical
+  title: 'View'
+
+entity.timesheet.edit_form:
+  route_name: entity.timesheet.edit_form
+  base_route: entity.timesheet.canonical
+  title: 'Edit'
+
+entity.timesheet.clone_form:
+  route_name: entity.timesheet.clone_form
+  base_route: entity.timesheet.canonical
+  title: 'Clone'
+
+entity.timesheet.delete_form:
+  route_name:  entity.timesheet.delete_form
+  base_route:  entity.timesheet.canonical
+  title: Delete
+  weight: 10

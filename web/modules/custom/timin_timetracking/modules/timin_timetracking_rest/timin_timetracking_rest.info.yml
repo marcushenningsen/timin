@@ -1,0 +1,13 @@
+name: Timin Time Tracking Rest
+type: module
+description: 'Timin Time Tracking Rest'
+dependencies:
+  - timin_timetracking
+  - rest
+  - serialization
+  - restui
+  - hal
+  - basic_auth
+core: 8.x
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+package: 'Timin Time Tracking'

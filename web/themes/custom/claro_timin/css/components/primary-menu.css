@@ -1,0 +1,59 @@
+
+/**
+ * Primary menu
+ */
+
+nav li,
+.block-language li {
+  list-style-type: none;
+}
+
+.primary-menu nav h2,
+.primary-menu .block-language h2,
+.footer-menu nav h2,
+.footer-menu .block-language h2 {
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: #74b900;
+  line-height: 1rem;
+  margin: 1rem 0 0.25rem 0;
+  padding-left: 10px;
+}
+
+.primary-menu nav ul,
+.primary-menu .block-language ul,
+.footer-menu nav ul,
+.footer-menu .block-language ul {
+  margin: 0;
+  list-style-type: none;
+  list-style-image: none;
+}
+
+.primary-menu nav li,
+.primary-menu .block-language li,
+.footer-menu nav li,
+.footer-menu .block-language li {
+  list-style-type: none;
+  list-style-image: none;
+}
+
+.primary-menu nav a,
+.primary-menu .block-language a,
+.footer-menu nav a,
+.footer-menu .block-language a {
+  display: block;
+  padding: 5px 10px;
+  border-radius: 0.25rem;
+  font-size: 1.2rem;
+  color: #423841;
+  text-decoration: none;
+}
+
+
+/*.primary-menu nav .is-active,*/
+
+.primary-menu .is-active,
+/*.primary-menu .block-language .is-active,*/
+.footer-menu .block-language .is-active {
+  background: #7EF400;
+}

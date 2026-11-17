@@ -1,0 +1,8 @@
+services:
+  Drupal\timin_timetracking\TimesheetTableBuilder:
+    arguments:
+      - '@entity_type.manager'
+      - '@database'
+      - '@date.formatter'
+      - '@flag'
+      - '@flag.link_builder'

@@ -1,0 +1,34 @@
+name: timin
+
+services:
+  timin_mysql:
+    image: mysql:8.0
+    container_name: timin_mysql
+    ports:
+      - 3306:3306
+    env_file: .env
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: "no"
+
+  timin_drupal:
+    image: drupal:10-php8.4-apache-bookworm
+    container_name: timin_drupal
+    depends_on:
+      - timin_mysql
+    ports:
+      - 8080:80
+    volumes:
+      - drupal-root:/opt/drupal
+      - ./web/modules/custom:/opt/drupal/web/modules/custom
+      - ./web/themes/custom:/opt/drupal/web/themes/custom
+      - ./php/dev.ini:/usr/local/etc/php/conf.d/zz-dev.ini
+    restart: "no"
+
+volumes:
+  mysql-data:
+    external: true
+    name: timin_mysql-data
+  drupal-root:
+    external: true
+    name: timin_drupal-root

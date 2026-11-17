@@ -1,0 +1,195 @@
+
+caption {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.889rem;
+    font-weight: bold;
+    line-height: 1.125rem;
+}
+
+.sortable-heading.is-active > a {
+	color: #222330;
+}
+
+.sortable-heading.is-active > a::before {
+	border-color: #222330;
+}
+
+.tablesort--asc{
+  	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 12'%3e%3cpath d='M5 .44L.719 4.718 1.78 5.78 4.25 3.313v7.937h1.5V3.312l2.469 2.47L9.28 4.718 5 .439z' fill='%23585858'/%3e%3c/svg%3e");
+}
+
+.tablesort--desc {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 12'%3e%3cpath d='M4.25.75v7.938l-2.469-2.47L.72 7.282 5 11.561l4.281-4.28L8.22 6.22 5.75 8.687V.75h-1.5z' fill='%23585858'/%3e%3c/svg%3e");
+}
+
+
+table {
+	margin-bottom:0;
+}
+
+th {
+	background-color: #E8E8E8;
+	vertical-align: top;
+}
+
+th .filter-column__title {
+	padding-bottom: 0.3rem;
+}
+
+th input, th select {
+	padding: 2px;
+	line-height: 1rem;
+	margin-top: 0.5rem;
+	
+}
+
+th input::placeholder {
+	visibility: hidden;
+}
+
+
+
+.dt-container .dtsp-bordered,
+.dt-container .dtsp-topRow { 
+	background: #F8F8F8;
+}
+
+table.dataTable>tbody>tr.selected>* {
+	box-shadow: inset 0 0 0 9999px #74b900;
+}
+
+
+
+table.dataTable thead .dt-column-title {
+	white-space: nowrap;
+}
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc {
+	background-position-y: 13px;
+	background-repeat: no-repeat;
+  background-position: center right;
+}
+
+table.dataTable thead .sorting {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8'%3e%3cpath d='M1.75.25v1.5h10.5V.25zm0 3v1.5h7.5v-1.5zm0 3v1.5h4.5v-1.5z' fill='%23cccccc'/%3e%3c/svg%3e");
+}
+
+table.dataTable thead .sorting_asc {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 12'%3e%3cpath d='M5 .44L.719 4.718 1.78 5.78 4.25 3.313v7.937h1.5V3.312l2.469 2.47L9.28 4.718 5 .439z' fill='%23585858'/%3e%3c/svg%3e");
+	border-bottom: 0.1875rem solid;
+}
+
+table.dataTable thead .sorting_desc {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 12'%3e%3cpath d='M4.25.75v7.938l-2.469-2.47L.72 7.282 5 11.561l4.281-4.28L8.22 6.22 5.75 8.687V.75h-1.5z' fill='%23585858'/%3e%3c/svg%3e");
+	border-bottom: 0.1875rem solid;
+}
+
+table.dataTable .flag {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
+table.dataTable .extra_works_list {
+		max-width: 180px;
+}
+
+table.dataTable .extra_works_list input,
+table.dataTable .employee_list input {
+	width: 80%;
+}
+
+table.dataTable .employee_list {
+		max-width: 180px;
+}
+
+table.dataTable ul li {
+	list-style-position:inside;
+	font-size: 80%;
+	margin:0;
+	padding: 0;
+	line-height: 1.25;
+}
+
+
+table.dataTable ul.ellipsis li {
+		overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dataTables_wrapper .dataTables_filter {
+	margin-bottom: 1rem;
+}
+
+.dt-search {
+}
+
+
+tr:hover, tr:focus {
+	background-color: #F5F5F5;
+}
+
+
+
+
+
+table.dataTable, 
+table.dataTable th, 
+table.dataTable td {
+	box-sizing: border-box;
+}
+
+table.dataTable tbody th, 
+table.dataTable tbody td {
+	height: 3rem;
+	padding: 0 1rem;
+	border-top: 1px solid #ddd;
+	box-sizing: border-box;
+}
+
+table.dataTable th input {
+	max-width: 120px;
+}
+
+
+table.dataTable thead > tr > th.dt-orderable-asc:hover, 
+table.dataTable thead > tr > th.dt-orderable-desc:hover,
+table.dataTable thead > tr > td.dt-orderable-asc:hover,
+table.dataTable thead > tr > td.dt-orderable-desc:hover {
+	outline: unset;
+	outline-offset: unset;
+}
+
+
+
+
+td.number {
+	text-align: right;
+}
+
+table.dataTable th.dt-type-date,
+table.dataTable td.dt-type-date {
+    text-align: left;
+}
+
+
+td.views-field-link-flag .action-unflag a,
+td.link-flag .action-unflag a {
+	color: #181818;
+}
+
+td.views-field-link-flag .action-flag a,
+td.link-flag .action-flag a {
+	color: #ddd;
+}
+
+td.views-field-link-flag .action-flag a:hover,
+td.link-flag .action-flag a:hover {
+	color: #777;
+}
+
+

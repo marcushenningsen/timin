@@ -1,0 +1,43 @@
+
+
+entity.timesheet.clone_form:
+  path: '/timesheets/{timesheet}/clone'
+  defaults:
+    _entity_form: timesheet.clone
+    _title_callback: '\Drupal\timin_timetracking\Controller\TimesheetController::getTitle'
+  requirements: 
+    _permission: 'clone timesheet entities'
+  
+timin_timetracking.timesheets:
+  path: '/timesheets'
+  defaults:
+    _controller: '\Drupal\timin_timetracking\Controller\TimesheetController::timesheets'
+    _title: 'Timesheets'
+  requirements:
+    _permission: 'view timesheet entities'
+
+timin_timetracking.timesheets_batch:
+  path: '/timesheets/batch/{ids}'
+  defaults:
+    _controller: '\Drupal\timin_timetracking\Controller\TimesheetBatchController::downloadMultiple'
+    _title: 'Timesheets'
+  requirements:
+    _permission: 'view timesheet entities'
+    ids: '\d+(,\d+)*'
+    
+    
+timin_timetracking.projects:
+  path: '/projects'
+  defaults:
+    _controller: '\Drupal\timin_timetracking\Controller\ListController::projects'
+    _title: 'Projekte'
+  requirements:
+    _permission: 'view project entities'
+
+timin_timetracking.employees:
+  path: '/employees'
+  defaults:
+    _controller: '\Drupal\timin_timetracking\Controller\ListController::employees'
+    _title: 'Personal'
+  requirements:
+    _permission: 'view employee entities'

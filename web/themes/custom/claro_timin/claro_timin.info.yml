@@ -1,0 +1,21 @@
+name: Claro for Timin
+type: theme
+description: 'Overrides the Claro theme.'
+core: 8.x
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+base theme: claro
+libraries:
+  - claro_timin/global-styling
+regions:
+  site_branding: 'Site branding'
+  primary_menu: 'Primary menu'
+  footer_menu: 'Footer menu'
+  breadcrumb: 'Breadcrumb'
+  page_title: 'Page title'
+  pre_content: 'Pre-content'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  content: 'Content'
+  footer: 'Footer'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'

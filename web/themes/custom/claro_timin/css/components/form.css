@@ -1,0 +1,133 @@
+
+.filter-wrapper {
+	ddisplay: none;
+}
+
+.filter-help,
+.filter-guidelines {
+	display: none;
+}
+
+
+
+.form-actions {
+	clear: both;
+}
+
+#edit-field-project-employee-label {
+	width: 100%;
+}
+
+.form-item--inline {
+	display: inline-block;
+	margin-bottom: 0;
+	margin-right: 1rem;
+}
+
+
+.form-element--type-date, .form-element--type-time {
+  vertical-align: unset;
+}
+
+.form-wrapper--works, .view-wrapper--works {
+	margin-top: 0.5rem;
+}
+
+.form-wrapper--works-item, 
+.view-wrapper--works-item,
+.form-wrapper--images, 
+.view-wrapper--images {
+	border-top: 1px solid #555;
+	padding: 0.5rem 0;
+	page-break-inside: avoid;
+}
+
+
+@media not print {
+	.form-wrapper.service-type-id-0,
+	.form-wrapper.service-type-id-0 *,
+	.view-wrapper--works-item.service-type-id-0,
+	.view-wrapper--works-item.service-type-id-0 * {
+		color: #446CDA;
+		-webkit-text-fill-color: #446CDA;
+	}
+}
+
+
+
+
+#edit-timesheet-footer {
+	border-top: 1px solid #555;
+}
+
+#edit-timesheet-footer-time-trackings-sum {
+	margin-top: 1rem;
+}
+
+
+
+/* Switch from bootstrap https://getbootstrap.com/docs/5.1/forms/checks-radios/#switches */
+
+
+
+
+.form-switch {
+}
+
+.form-switch .form-type--boolean {
+	margin: 0;
+}
+
+.form-switch .form-type--boolean .form-boolean {
+	position: static;
+	float: none;
+	margin: 0;
+	padding: 0;
+	transform: none;
+}
+
+.form-switch .form-checkbox {
+  width: 2em;
+  height: 1em;
+  margin-left: -2.5em;
+  margin-top: 0.25em;
+  vertical-align: top;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+  background-position: left center;
+  border-radius: 2em;
+  transition: background-position 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-switch .form-checkbox {
+    transition: none;
+  }
+}
+.form-switch .form-checkbox:focus {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%2386b7fe'/%3e%3c/svg%3e");
+}
+.form-switch .form-checkbox:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  background-position: right center;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+}
+
+.form-switch .form-item__label.option {
+	display: none;
+}
+
+/* Hide the AJAX throbber  */
+.form-switch .ajax-progress,
+.form-switch .ajax-progress-throbber {
+  display: none !important;
+}

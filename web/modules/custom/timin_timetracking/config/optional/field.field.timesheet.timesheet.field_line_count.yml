@@ -1,0 +1,24 @@
+uuid: beb539c2-320c-478f-b982-ea259147ac65
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.timesheet.field_line_count
+  module:
+    - timin_timetracking
+id: timesheet.timesheet.field_line_count
+field_name: field_line_count
+entity_type: timesheet
+bundle: timesheet
+label: 'Line Count'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

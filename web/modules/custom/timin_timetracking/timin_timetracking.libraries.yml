@@ -1,0 +1,45 @@
+# DataTables core only, from the local copy in /libraries/datatables.
+datatables_core:
+  css:
+    base:
+      /libraries/datatables/dataTables.dataTables.min.css: { minified: true }
+    theme:
+      css/timin-datatables.css: {}
+  js:
+    /libraries/datatables/dataTables.min.js: { minified: true }
+  dependencies:
+    - core/jquery
+
+# Timesheet overview and project timesheet table: core plus extensions.
+timin_timetracking_datatables:
+  css:
+    base:
+      /libraries/datatables/fixedHeader.dataTables.min.css: { minified: true }
+      /libraries/datatables/fixedColumns.dataTables.min.css: { minified: true }
+      /libraries/datatables/searchPanes.dataTables.min.css: { minified: true }
+      /libraries/datatables/select.dataTables.min.css: { minified: true }
+      /libraries/datatables/buttons.dataTables.min.css: { minified: true }
+      /libraries/datatables/dataTables.dateTime.min.css: { minified: true }
+  js:
+    /libraries/datatables/dataTables.fixedHeader.min.js: { minified: true }
+    /libraries/datatables/dataTables.fixedColumns.min.js: { minified: true }
+    /libraries/datatables/dataTables.searchPanes.min.js: { minified: true }
+    /libraries/datatables/dataTables.select.min.js: { minified: true }
+    /libraries/datatables/dataTables.buttons.min.js: { minified: true }
+    /libraries/datatables/dataTables.dateTime.min.js: { minified: true }
+    js/datatables.js: {}
+  dependencies:
+    - timin_timetracking/datatables_core
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+
+# Project and employee lists.
+list_tables:
+  js:
+    js/list-tables.js: {}
+  dependencies:
+    - timin_timetracking/datatables_core
+    - core/drupal
+    - core/drupalSettings
+    - core/once
