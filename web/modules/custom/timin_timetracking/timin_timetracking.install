@@ -6,7 +6,7 @@ use Drupal\field\Entity\FieldStorageConfig;
 
 
 function timin_timetracking_schema() {
-  $schema['timesheet_works'] = array(
+  $schema['timesheet_works'] = [
     'fields' => [
       'timesheet_id' => [
         'type' => 'int',
@@ -27,9 +27,9 @@ function timin_timetracking_schema() {
       'timesheet_id',
       'service_type_id',
     ],
-  );
+  ];
 
-  $schema['timesheet_data'] = array(
+  $schema['timesheet_data'] = [
     'fields' => [
       'timesheet_id' => [
         'type' => 'int',
@@ -78,7 +78,7 @@ function timin_timetracking_schema() {
         'employee_id',
       ],
     ],
-  );
+  ];
  
   return $schema;
 }
@@ -205,7 +205,7 @@ function timin_timetracking_update_10006() {
 		->fields('td',['timesheet_id'])
 		->groupBy('timesheet_id')
 		->addExpression('COUNT(DISTINCT employee_id)', 'personnel_count');
-	$timesheet_data_results = array();
+	$timesheet_data_results = [];
 	$timesheet_data_results = $timesheet_data_query->execute()->fetchAll();
 
 	foreach ($timesheet_data_results as $data) {

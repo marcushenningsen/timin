@@ -17,7 +17,7 @@ class ProjectEntityDeleteForm extends ContentEntityDeleteForm {
     $entity = $this->entity;
 
     $connection = \Drupal::service('database');
-		$timesheet_results = array();
+		$timesheet_results = [];
 		$timesheet_query =  $connection->select('timesheet', 't');
 		$timesheet_query->leftJoin('timesheet__field_project', 'tp', 't.id = tp.entity_id');
 		$timesheet_query

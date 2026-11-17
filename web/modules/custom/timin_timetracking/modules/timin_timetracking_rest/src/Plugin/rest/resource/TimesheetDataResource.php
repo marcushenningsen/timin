@@ -47,7 +47,7 @@ class TimesheetDataResource extends ResourceBase {
 		$timesheet_data_query->addField('pfa','field_abbreviation_value','project_abbr');
 		$timesheet_data_query->addField('pfs','field_status2_value','project_status');
 		$timesheet_data_query->addField('pfn','field_name_value','service_type_name');
-    $timesheet_data = array();
+    $timesheet_data = [];
 		$timesheet_data = $timesheet_data_query->execute()->fetchAll();
 
 		foreach ( $timesheet_data as $value ) {

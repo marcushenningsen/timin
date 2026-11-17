@@ -17,7 +17,7 @@ class EmployeeEntityDeleteForm extends ContentEntityDeleteForm {
     $entity = $this->entity;
 
     $connection = \Drupal::service('database');
-		$timesheet_data_results = array();
+		$timesheet_data_results = [];
 		$timesheet_data_query =  $connection->select('timesheet_data', 'td');
 		$timesheet_data_query
 			->condition('td.employee_id', $entity->id())

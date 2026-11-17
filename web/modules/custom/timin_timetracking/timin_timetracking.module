@@ -70,9 +70,9 @@ function timin_timetracking_employee_view(array &$build, EntityInterface $entity
 
 	$build['employee_project_assignments'] = [
 		'#type' => 'container',
-		'#attributes' => array(
-			'class' => array('field--label-above'),
-		),
+		'#attributes' => [
+			'class' => ['field--label-above'],
+		],
 	];
 
 	$build['employee_project_assignments']['field_label'] = [
@@ -81,17 +81,17 @@ function timin_timetracking_employee_view(array &$build, EntityInterface $entity
 
 	$build['employee_project_assignments']['field_items'] = [
 		'#type' => 'container',
-		'#attributes' => array(
-			'class' => array('field__items'),
-		),
+		'#attributes' => [
+			'class' => ['field__items'],
+		],
 	];
 
 	foreach ($projects_assigned as $id => $prj) {
 		$build['employee_project_assignments']['field_items'][$id] = [
 			'#type' => 'container',
-			'#attributes' => array(
-				'class' => array('field__item'),
-			),
+			'#attributes' => [
+				'class' => ['field__item'],
+			],
 		];
 		$link = $prj->toLink()->toRenderable();
 		$build['employee_project_assignments']['field_items'][$id]['link'] = $link;
@@ -240,23 +240,23 @@ function timin_timetracking_timesheet_view(array &$build, EntityInterface $entit
 			
 		}
 
-		$header_table = array(
-			array('data' => t('Employee'), 'class' => 'employee'),
-			array('data' => t('Time'), 'class' => 'time'),
-		);
+		$header_table = [
+			['data' => t('Employee'), 'class' => 'employee'],
+			['data' => t('Time'), 'class' => 'time'],
+		];
 
 		// create rows
 		$rows = [];
 		foreach ($timesheet_data_results as $data) {
 			if ( $record->service_type_id == $data->service_type_id ) {
-				$rows[] = array(
+				$rows[] = [
 					//'employee' => $data->employee_id,
 					//'employee' => $employee_entity->label(),
 					//'time' => $data->time,
-					//array('data' => $employee_entity->label(), 'class' => 'employee'),
-					array('data' => $data->name, 'class' => 'employee'),
-					array('data' => number_format($data->time, 2, ',', '.'), 'class' => 'time'),
-				);
+					//['data' => $employee_entity->label(), 'class' => 'employee'],
+					['data' => $data->name, 'class' => 'employee'],
+					['data' => number_format($data->time, 2, ',', '.'), 'class' => 'time'],
+				];
 			}
 		}
 
@@ -269,11 +269,11 @@ function timin_timetracking_timesheet_view(array &$build, EntityInterface $entit
 		$sum_time = $sum_query->execute()->fetchField();
 
 		if ( $sum_time > 0 ) {
-			$total_row = array(
-				array('data' => t('Total'), 'class' => 'total'),
-				array('data' => number_format($sum_time, 2, ',', '.'), 'class' => 'time'),
-			);
-			$rows[] = array('data' => $total_row, 'class' => 'total');
+			$total_row = [
+				['data' => t('Total'), 'class' => 'total'],
+				['data' => number_format($sum_time, 2, ',', '.'), 'class' => 'time'],
+			];
+			$rows[] = ['data' => $total_row, 'class' => 'total'];
 		}
 
 
@@ -315,10 +315,10 @@ function timin_timetracking_timesheet_view(array &$build, EntityInterface $entit
 			//'#header' => $header_table,
 			'#rows' => $rows,
 			'#empty' => t('No times tracked'),
-			'#attributes' => array(
-				'class' => array('timesheet-data-table'),
+			'#attributes' => [
+				'class' => ['timesheet-data-table'],
 				'id' => 'timesheet-data-table',
-			),
+			],
 		];
 
 		$i++;

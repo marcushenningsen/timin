@@ -86,7 +86,7 @@ class TimesheetEntityForm extends ContentEntityForm {
     // all connections
     $connection = $this->database;
 
-    $service_type_results = array();
+    $service_type_results = [];
     $service_type_query =  $connection->select('paragraphs_item_field_data', 'fd');
     $service_type_query->join('paragraph__field_name', 'fn', 'fd.id = fn.entity_id');
     $service_type_query->innerJoin('project__field_works', 'fw', 'fd.id = fw.field_works_target_id');
@@ -98,7 +98,7 @@ class TimesheetEntityForm extends ContentEntityForm {
       ->orderBy('fw.delta');
     $service_type_results = $service_type_query->execute()->fetchAll();
 
-    $employee_results = array();
+    $employee_results = [];
     $employee_query =  $connection->select('project__field_project_employee', 'pe');
     $employee_query->join('employee', 'e', 'pe.field_project_employee_target_id = e.id');
     $employee_query->join('employee__field_count_to_personnel', 'ecp', 'e.id = ecp.entity_id');
@@ -111,7 +111,7 @@ class TimesheetEntityForm extends ContentEntityForm {
       ->orderBy('name');
     $employee_results = $employee_query->execute()->fetchAll();
 
-    $timesheet_works_results = array();
+    $timesheet_works_results = [];
     $timesheet_works_query =  $connection->select('timesheet_works', 'tw');
     $timesheet_works_query->leftJoin('paragraph__field_name', 'fn', 'tw.service_type_id = fn.entity_id');
     $timesheet_works_query
@@ -120,7 +120,7 @@ class TimesheetEntityForm extends ContentEntityForm {
       ->fields('fn',['field_name_value']);
     $timesheet_works_results = $timesheet_works_query->execute()->fetchAll();
 
-    $timesheet_data_results = array();
+    $timesheet_data_results = [];
     $timesheet_data_query =  $connection->select('timesheet_data', 'td');
     $timesheet_data_query->join('employee', 'e', 'td.employee_id = e.id');
     $timesheet_data_query->join('employee__field_count_to_personnel', 'ecp', 'e.id = ecp.entity_id');
@@ -135,19 +135,19 @@ class TimesheetEntityForm extends ContentEntityForm {
     // build the employees array
     $employees = [];
     foreach ($employee_results as $employee) {
-      $employees[$employee->field_project_employee_target_id] = array(
+      $employees[$employee->field_project_employee_target_id] = [
         'id' => $employee->field_project_employee_target_id,
         'name' => $employee->name,
         'count_to_personnel' => $employee->field_count_to_personnel_value,
-      );
+      ];
     }
 
     foreach ($timesheet_data_results as $data) {
-      $employees[$data->employee_id] = array(
+      $employees[$data->employee_id] = [
         'id' => $data->employee_id,
         'name' => $data->name,
         'count_to_personnel' => $data->field_count_to_personnel_value,
-      );
+      ];
     }
 
     uasort($employees, function($a, $b) {
@@ -157,20 +157,20 @@ class TimesheetEntityForm extends ContentEntityForm {
     // build the added works array
 
     if ( empty($entity->id()) ) {
-      $added_works_initial[0] = array(
+      $added_works_initial[0] = [
         'id' => '0',
         'name' => '',
         'description' => '',
         'ignore_print' => 0,
-      );
+      ];
     } else {
       foreach ($timesheet_works_results as $timesheet_works) {
-        $added_works_initial[$timesheet_works->service_type_id] = array(
+        $added_works_initial[$timesheet_works->service_type_id] = [
           'id' => $timesheet_works->service_type_id,
           'name' => $timesheet_works->field_name_value,
           'description' => $timesheet_works->works_description,
           'ignore_print' => $timesheet_works->ignore_print,
-        );
+        ];
       }
 
     }
@@ -195,12 +195,12 @@ class TimesheetEntityForm extends ContentEntityForm {
     // build the form elements
 
     // wrapper for the header elements
-    $form['timesheet_header'] = array(
+    $form['timesheet_header'] = [
       '#type' => 'container',
       '#tree' => TRUE,
-      '#attributes' => array('class' => array('form-wrapper'),),
+      '#attributes' => ['class' => ['form-wrapper'],],
       '#weight' => 0,
-    );
+    ];
 
     // manipulate the field_project, remove inactive projects
     $pids = $this->entityTypeManager->getStorage('project')->getQuery()->condition('field_status2', 0)->accessCheck(TRUE)->execute();
@@ -234,15 +234,15 @@ class TimesheetEntityForm extends ContentEntityForm {
     $form['timesheet_header']['field_date']['widget'][0]['value']['#default_value'] = $selectedDate;
 
     // button for "set project"
-    $form['timesheet_header']['submit_field_project'] = array(
+    $form['timesheet_header']['submit_field_project'] = [
       '#type' => 'submit',
       '#value' => t('Set Project and Date'),
-      '#submit' => array('::setProjectCallback'),
-      '#attributes' => array(
-        'class' => array('button--action','button--primary'),
+      '#submit' => ['::setProjectCallback'],
+      '#attributes' => [
+        'class' => ['button--action','button--primary'],
         'id' => 'set-project',
-      ),
-    );
+      ],
+    ];
 
     // ordering
     $form['timesheet_header']['field_project']['#weight'] = 0;
@@ -251,43 +251,43 @@ class TimesheetEntityForm extends ContentEntityForm {
     $form['timesheet_header']['field_events']['#weight'] = 3;
 
     // and block-inline
-    $form['timesheet_header']['field_project']['#attributes']['class'] = array('form-item--inline');
-    $form['timesheet_header']['field_date']['#attributes']['class'] = array('form-item--inline');
-    $form['timesheet_header']['submit_field_project']['#attributes']['class'] = array('form-item--inline');
+    $form['timesheet_header']['field_project']['#attributes']['class'] = ['form-item--inline'];
+    $form['timesheet_header']['field_date']['#attributes']['class'] = ['form-item--inline'];
+    $form['timesheet_header']['submit_field_project']['#attributes']['class'] = ['form-item--inline'];
 
     // initiate the works wrapper
-    $form['works'] = array(
+    $form['works'] = [
       '#type' => 'container',
       '#tree' => TRUE,
-      '#attributes' => array('class' => array('form-wrapper--works'),),
+      '#attributes' => ['class' => ['form-wrapper--works'],],
       '#weight' => 9,
-    );
+    ];
 
     // button for more works to the bottom of the form
-    $form['service_type'] = array(
+    $form['service_type'] = [
       '#type' => 'container',
       '#tree' => TRUE,
-      '#attributes' => array('class' => array('form-wrapper'),),
+      '#attributes' => ['class' => ['form-wrapper'],],
       '#weight' => 15,
-    );
+    ];
 
     // the select field and submit button for extra services
-    $form['service_type']['select_service_type'] = array(
+    $form['service_type']['select_service_type'] = [
       '#type' => 'select',
       '#title' => $this->t('Add Works'),
       '#options' => $service_types_available,
       '#wrapper_attributes' => ['class' => ['form-item--inline']],
-    );
+    ];
 
-    $form['service_type']['submit_service_type'] = array(
+    $form['service_type']['submit_service_type'] = [
       '#type' => 'submit',
       '#value' => t('+ Works'),
-      '#submit' => array('::addWorksCallback'),
-      '#attributes' => array(
-        'class' => array('button--action','button--primary'),
+      '#submit' => ['::addWorksCallback'],
+      '#attributes' => [
+        'class' => ['button--action','button--primary'],
         'id' => 'set-service-type',
-      ),
-    );
+      ],
+    ];
 
     if ( empty($service_types_available) ) {
       $form['service_type']['select_service_type']['#attributes']['disabled'] = TRUE;
@@ -296,27 +296,27 @@ class TimesheetEntityForm extends ContentEntityForm {
     }
 
     // wrapper for the images
-    $form['timesheet_images'] = array(
+    $form['timesheet_images'] = [
       '#type' => 'container',
       '#tree' => TRUE,
-      '#attributes' => array('class' => array('form-wrapper--works'),),
+      '#attributes' => ['class' => ['form-wrapper--works'],],
       '#weight' => 20,
-    );
+    ];
 
     $form['timesheet_images']['field_image'] = $form['field_image'];
     unset($form['field_image']);
     $form['timesheet_images']['#disabled'] = TRUE;
 
     // preview button
-    $form['actions']['preview'] = array(
+    $form['actions']['preview'] = [
       '#type' => 'submit',
       '#value' => t('Preview'),
-      '#submit' => array('::previewCallback'),
-      '#attributes' => array(
-        'class' => array('button--action','button--primary'),
+      '#submit' => ['::previewCallback'],
+      '#attributes' => [
+        'class' => ['button--action','button--primary'],
         'id' => 'preview',
-      ),
-    );
+      ],
+    ];
 
     // disable action buttons
     $form['actions']['submit']['#disabled'] = TRUE;
@@ -342,10 +342,10 @@ class TimesheetEntityForm extends ContentEntityForm {
 
       foreach ($added_works as $service_type_id => $works) {
 
-        $form['works'][$service_type_id] = array(
+        $form['works'][$service_type_id] = [
           '#type' => 'container',
-          '#attributes' => array('class' => array('form-wrapper--works-item'),),
-        );
+          '#attributes' => ['class' => ['form-wrapper--works-item'],],
+        ];
 
         //if ( $service_type_id > 0 ) {
 
@@ -353,7 +353,7 @@ class TimesheetEntityForm extends ContentEntityForm {
             $works['name'] = t('Main Service');
           }
 
-          $form['works'][$service_type_id]['details'] = array(
+          $form['works'][$service_type_id]['details'] = [
             '#type' => 'details',
             '#title' => $works['name'],
             '#attributes' => [
@@ -361,26 +361,26 @@ class TimesheetEntityForm extends ContentEntityForm {
                 'service-type-id-' . $service_type_id,
               ],
             ],
-          );
+          ];
 
-          $form['works'][$service_type_id]['details']['service_type'] = array(
+          $form['works'][$service_type_id]['details']['service_type'] = [
             '#type' => 'textfield',
             '#title' => $this->t('Service Type'),
             '#default_value' => $works['name'],
-            '#attributes' => array(
+            '#attributes' => [
               'disabled' => 'disabled'
-            ),
-          );
+            ],
+          ];
 
         //}
 
-        $form['works'][$service_type_id]['details']['service_type_id'] = array(
+        $form['works'][$service_type_id]['details']['service_type_id'] = [
           '#type' => 'textfield',
           '#default_value' => $service_type_id,
-          '#attributes' => array(
+          '#attributes' => [
             'hidden' => 'true'
-          ),
-        );
+          ],
+        ];
 
         if ( $works['description'] != '' ) {
           $works_description = $works['description'];
@@ -388,39 +388,39 @@ class TimesheetEntityForm extends ContentEntityForm {
           $works_description =  t('- Ort, Bauteil, Tätigkeit');
         };
 
-        $form['works'][$service_type_id]['details']['works_description'] = array(
+        $form['works'][$service_type_id]['details']['works_description'] = [
           '#type' => 'textarea',
           '#title' => $this->t('Works Description'),
           '#default_value' => $works_description,
-        );
+        ];
 
         if ( $service_type_id > 0 ) {
           $form['works'][$service_type_id]['details']['works_description']['#title'] = $this->t('Extra Works Description');
         }
 
-        $form['works'][$service_type_id]['details']['time_trackings'] = array(
+        $form['works'][$service_type_id]['details']['time_trackings'] = [
           '#type' => 'table',
-          '#header' => array(
-            array('data' => t('Employee'), 'class' => 'employee'),
-            array('data' => t('Time'), 'class' => 'time'),
-            array('data' => t('Count'), 'class' => 'hidden'),
-          ),
+          '#header' => [
+            ['data' => t('Employee'), 'class' => 'employee'],
+            ['data' => t('Time'), 'class' => 'time'],
+            ['data' => t('Count'), 'class' => 'hidden'],
+          ],
           '#empty' => t('No employees assigned to this project'),
-          '#attributes' => array(
-            'class' => array('timesheet-data-table'),
-          ),
-        );
+          '#attributes' => [
+            'class' => ['timesheet-data-table'],
+          ],
+        ];
 
         if ( $service_type_id > 0 ) {
-          $form['works'][$service_type_id]['details']['remove_works'] = array(
+          $form['works'][$service_type_id]['details']['remove_works'] = [
             '#type' => 'submit',
             '#value' => t('- Works'),
             '#name' => 'remove_works-' . $service_type_id,
-            '#submit' => array('::removeWorksCallback'),
-            '#attributes' => array(
-              'class' => array('button--action','button--primary'),
-            ),
-          );
+            '#submit' => ['::removeWorksCallback'],
+            '#attributes' => [
+              'class' => ['button--action','button--primary'],
+            ],
+          ];
         }
 
         // fill the table
@@ -428,10 +428,10 @@ class TimesheetEntityForm extends ContentEntityForm {
           $form['works'][$service_type_id]['details']['time_trackings'][$employee_id]['employee'] = [
             '#type' => 'textfield',
             '#default_value' => $employee['name'],
-            '#attributes' => array(
+            '#attributes' => [
               'placeholder' => $employee['name'],
               'disabled' => 'disabled'
-            ),
+            ],
             '#required' => TRUE,
           ];
           $form['works'][$service_type_id]['details']['time_trackings'][$employee_id]['time'] = [
@@ -461,11 +461,11 @@ class TimesheetEntityForm extends ContentEntityForm {
           $ignore_print = null;
         }
 
-        $form['works'][$service_type_id]['details']['ignore_print'] = array(
+        $form['works'][$service_type_id]['details']['ignore_print'] = [
           '#type' => 'checkbox',
           '#title' => t('Don\'t print service type'),
           '#default_value' => $ignore_print,
-        );
+        ];
 
       }
     }
@@ -501,46 +501,46 @@ class TimesheetEntityForm extends ContentEntityForm {
       $form['timesheet_images']['#attributes']['class'][] = 'hidden';
 
       // wrapper for the preview
-      $form['preview'] = array(
+      $form['preview'] = [
         '#type' => 'container',
         '#tree' => TRUE,
-        '#attributes' => array('class' => array('form-wrapper'),),
+        '#attributes' => ['class' => ['form-wrapper'],],
         '#weight' => -1,
-      );
+      ];
 
       // table
-      $form['preview']['time_trackings'] = array(
+      $form['preview']['time_trackings'] = [
         '#type' => 'table',
-        '#header' => array(
-          array('data' => t('Employee'), 'class' => 'employee'),
-          array('data' => t('Time'), 'class' => 'time'),
-          array('data' => t('Extra Works'), 'class' => 'works_sum'),
-          array('data' => t('Total'), 'class' => 'sum'),
-        ),
+        '#header' => [
+          ['data' => t('Employee'), 'class' => 'employee'],
+          ['data' => t('Time'), 'class' => 'time'],
+          ['data' => t('Extra Works'), 'class' => 'works_sum'],
+          ['data' => t('Total'), 'class' => 'sum'],
+        ],
         '#empty' => 'No employees assigned to this project',
-        '#attributes' => array(
-          'class' => array('timesheet-data-table'),
-        ),
-      );
+        '#attributes' => [
+          'class' => ['timesheet-data-table'],
+        ],
+      ];
 
       foreach ($employees as $employee_id => $employee) {
         $form['preview']['time_trackings'][$employee_id]['employee'] = [
           '#type' => 'textfield',
           '#default_value' => $employee['name'],
-          '#attributes' => array(
+          '#attributes' => [
             'placeholder' => $employee['name'],
             'disabled' => 'true'
-          ),
+          ],
         ];
         $form['preview']['time_trackings'][$employee_id]['time'] = [
           '#type' => 'textfield',
           //'#default_value' => $form_state->getValue('works')[0]['time_trackings'][$employee_id]['time'],
           '#default_value' => number_format($form_state->getValue('works')[0]['details']['time_trackings'][$employee_id]['time'], 2, ',', '.'),
 
-          '#attributes' => array(
+          '#attributes' => [
             'disabled' => 'true',
-            'class' => array('time'),
-          ),
+            'class' => ['time'],
+          ],
         ];
 
         $works_sum = 0;
@@ -553,10 +553,10 @@ class TimesheetEntityForm extends ContentEntityForm {
         $form['preview']['time_trackings'][$employee_id]['works_sum'] = [
           '#type' => 'textfield',
           '#default_value' => number_format($works_sum, 2, ',', '.'),
-          '#attributes' => array(
+          '#attributes' => [
             'disabled' => 'true',
-            'class' => array('time'),
-          ),
+            'class' => ['time'],
+          ],
         ];
 
         $sum = 0;
@@ -566,10 +566,10 @@ class TimesheetEntityForm extends ContentEntityForm {
         $form['preview']['time_trackings'][$employee_id]['sum'] = [
           '#type' => 'textfield',
           '#default_value' => number_format($sum, 2, ',', '.'),
-          '#attributes' => array(
+          '#attributes' => [
             'disabled' => 'true',
-            'class' => array('time','sum'),
-          ),
+            'class' => ['time','sum'],
+          ],
         ];
 
       }
@@ -578,10 +578,10 @@ class TimesheetEntityForm extends ContentEntityForm {
       $form['preview']['time_trackings']['sum']['employee'] = [
         '#type' => 'textfield',
         '#default_value' => t('Sum'),
-        '#attributes' => array(
-          'class' => array('sum','sum_label'),
+        '#attributes' => [
+          'class' => ['sum','sum_label'],
           'disabled' => 'true',
-        ),
+        ],
       ];
 
       $time_total = 0;
@@ -596,10 +596,10 @@ class TimesheetEntityForm extends ContentEntityForm {
       $form['preview']['time_trackings']['sum']['time'] = [
         '#type' => 'textfield',
         '#default_value' => number_format($time_total, 2, ',', '.'),
-        '#attributes' => array(
-          'class' => array('sum'),
+        '#attributes' => [
+          'class' => ['sum'],
           'disabled' => 'true',
-        ),
+        ],
       ];
 
       $works_total = 0;
@@ -614,10 +614,10 @@ class TimesheetEntityForm extends ContentEntityForm {
       $form['preview']['time_trackings']['sum']['works_sum'] = [
         '#type' => 'textfield',
         '#default_value' => number_format($works_total, 2, ',', '.'),
-        '#attributes' => array(
-          'class' => array('sum'),
+        '#attributes' => [
+          'class' => ['sum'],
           'disabled' => 'true',
-        ),
+        ],
       ];
 
       $sum_total = 0;
@@ -630,22 +630,22 @@ class TimesheetEntityForm extends ContentEntityForm {
       $form['preview']['time_trackings']['sum']['sum'] = [
         '#type' => 'textfield',
         '#default_value' => number_format($sum_total, 2, ',', '.'),
-        '#attributes' => array(
-          'class' => array('sum'),
+        '#attributes' => [
+          'class' => ['sum'],
           'disabled' => 'true',
-        ),
+        ],
       ];
 
       // back to form button
-      $form['preview']['back'] = array(
+      $form['preview']['back'] = [
         '#type' => 'submit',
         '#value' => t('Back to form'),
-        '#submit' => array('::backCallback'),
-        '#attributes' => array(
-          'class' => array('button--action','button--primary'),
+        '#submit' => ['::backCallback'],
+        '#attributes' => [
+          'class' => ['button--action','button--primary'],
           'id' => 'back',
-        ),
-      );
+        ],
+      ];
 
       // save button
       $form['preview']['submit'] = $form['actions']['submit'];
@@ -673,7 +673,7 @@ class TimesheetEntityForm extends ContentEntityForm {
     $picked_date = $picked_date_value->format('Y-m-d');
 
     $connection = $this->database;
-    $timesheet_results = array();
+    $timesheet_results = [];
     $timesheet_query =  $connection->select('timesheet', 't');
     $timesheet_query->leftJoin('timesheet__field_project', 'tp', 't.id = tp.entity_id');
     $timesheet_query->leftJoin('timesheet__field_date', 'td', 't.id = td.entity_id');
@@ -710,11 +710,11 @@ class TimesheetEntityForm extends ContentEntityForm {
   }
 
   public function addWorksCallback(array &$form, FormStateInterface $form_state) {
-    $selectedServiceType = $form_state->getValue(array('service_type','select_service_type'));
+    $selectedServiceType = $form_state->getValue(['service_type','select_service_type']);
 
     $connection = $this->database;
 /*
-    $service_type_results = array();
+    $service_type_results = [];
     $service_type_query =  $connection->select('taxonomy_term_field_data', 'tt');
     $service_type_query
       ->condition('tt.tid', $selectedServiceType)
@@ -723,7 +723,7 @@ class TimesheetEntityForm extends ContentEntityForm {
     $service_type_results = $service_type_query->execute()->fetchAll();
 */
 
-    $service_type_results = array();
+    $service_type_results = [];
     $service_type_query =  $connection->select('paragraphs_item_field_data', 'fd');
     $service_type_query->join('paragraph__field_name', 'fn', 'fd.id = fn.entity_id');
     $service_type_query
@@ -734,11 +734,11 @@ class TimesheetEntityForm extends ContentEntityForm {
 
     $added_works = $form_state->get('added_works');
 
-    $added_works[$selectedServiceType] = array(
+    $added_works[$selectedServiceType] = [
       'id' => $selectedServiceType,
       'name' => $service_type_results[0]->field_name_value,
       'description' => '',
-    );
+    ];
 
     $form_state->set('added_works', $added_works);
     $form_state->setRebuild();

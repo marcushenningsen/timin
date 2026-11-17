@@ -55,30 +55,30 @@ class EmployeeEntityForm extends ContentEntityForm {
 		$build['employee'] = [
 			'#type' => 'container',
 			'#tree' => TRUE,
-			'#attributes' => array('class' => array('form-wrapper--employee'),),
+			'#attributes' => ['class' => ['form-wrapper--employee'],],
 			'#weight' => 5,
 		];
 
 		// create tableselect
 		$header = [
-			array('data' => t('Project'), 			'class' => 'project'),
-			array('data' => t('Abbreviation'), 	'class' => 'project'),
-			array('data' => t('Status'), 			'class' => 'project'),
+			['data' => t('Project'), 			'class' => 'project'],
+			['data' => t('Abbreviation'), 	'class' => 'project'],
+			['data' => t('Status'), 			'class' => 'project'],
 		];
 		$options = [];
 		foreach ($projects as $prj) {
-			$options[$prj->id()] = array(
-				array('data' => $prj->toLink(), 'class' => 'project'),
-				array('data' => $prj->get('field_abbreviation')->getString(), 'class' => 'project'),
-				array('data' => $prj->get('field_status2')->view(['label' => 'hidden']), 'class' => 'project'),
-			);
+			$options[$prj->id()] = [
+				['data' => $prj->toLink(), 'class' => 'project'],
+				['data' => $prj->get('field_abbreviation')->getString(), 'class' => 'project'],
+				['data' => $prj->get('field_status2')->view(['label' => 'hidden']), 'class' => 'project'],
+			];
 		}
 		$default_value = [];
 		foreach ($results as $ass) {
 			$default_value[$ass->entity_id] = true;
 		}
 
-		$form['employee']['project_assignments'] = array(
+		$form['employee']['project_assignments'] = [
 			'#type' => 'tableselect',
 			'#theme' => 'datatable',
       '#caption' => t('Project Assignments'),
@@ -86,18 +86,18 @@ class EmployeeEntityForm extends ContentEntityForm {
 			'#default_value' => $default_value,
 			'#options' => $options,
 			'#empty' => t('No projects assigned to this employee'),
-			'#attributes' => array(
-				'class' => array('project-assignments-table', 'stripe', 'hover', 'order-column'),
-				'datatable_options' => array(
+			'#attributes' => [
+				'class' => ['project-assignments-table', 'stripe', 'hover', 'order-column'],
+				'datatable_options' => [
 					'paging' => false,
 					//'searching' => false,
 					//'info' => false,
-					//'order' => array(array(2, "asc")),
+					//'order' => [[2, "asc"]],
 					//'order' => [1, 'asc'],
-					'aaSorting' => array(),					
-				),
-			),
-		);
+					'aaSorting' => [],					
+				],
+			],
+		];
 
     return $form;
   }
