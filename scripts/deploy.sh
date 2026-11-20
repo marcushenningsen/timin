@@ -2,6 +2,7 @@
 # Deploys the custom code from ~/repos/timin to a site on Strato.
 # Usage: deploy.sh staging|prod [--dry-run]
 set -euo pipefail          # stop at the first failing command
+set -x                     # print each command before running it
 
 # The braces make bash read the whole script before running it,
 # so "git pull" can safely replace this file while it runs.
