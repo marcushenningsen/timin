@@ -4,6 +4,10 @@
 set -euo pipefail          # stop at the first failing command
 set -x                     # print each command before running it
 
+# Drush subprocesses call "php"; on Strato plain php is CGI, so use the
+# ~/bin/php -> php-cli link instead.
+export PATH="$HOME/bin:$PATH"
+
 # The braces make bash read the whole script before running it,
 # so "git pull" can safely replace this file while it runs.
 {
